@@ -8,7 +8,7 @@ const listUsers = (req, res) => {
 
 const showUser = (req, res) => {
   let find = users.find(user => user.id === parseInt(req.params.id));
-  return escape.json(find);
+  return res.json(find);
 }
 
 const createUser = (req, res) => {
@@ -24,7 +24,7 @@ const updateUser = (req, res) => {
     users.forEach(user => {
       if(user._id === parseInt(req.params.userId)){
         user = sampleUser;
-        res.json(user);
+        return res.json(user);
       }
     })
   }
@@ -35,7 +35,7 @@ const deleteUser = (req, res) => {
   if(find){
     users.forEach(user => {
       if(user._id === parseInt(req.params.userId)){
-        res.json({msg: 'User deleted'});
+        return res.json({msg: 'User deleted'});
       }
     })
   }
