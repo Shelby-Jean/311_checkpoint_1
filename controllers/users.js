@@ -8,7 +8,11 @@ const listUsers = (req, res) => {
 
 const showUser = (req, res) => {
   let find = users.find(user => user.id === parseInt(req.params.id));
-  return res.json(find);
+  if(find) {
+    return res.json(find);
+  } else {
+    res.status(404).json({ msg: `No user with the id of ${req.params.id}.` });
+  }
 }
 
 const createUser = (req, res) => {
@@ -20,25 +24,30 @@ const createUser = (req, res) => {
 
 const updateUser = (req, res) => {
   let find = users.find(user => user.id === parseInt(req.params.id));
-  if(find){
+  if(find) {
     users.forEach(user => {
       if(user._id === parseInt(req.params.userId)){
-        user = sampleUser;
+        user = sampleUser; //look into this??
         return res.json(user);
-      }
+      } 
     })
+  } else {
+    res.status(400).json({ msg: `No user with the id of ${req.params.id}.` });
   }
 }
 
 const deleteUser = (req, res) => {
   let find = users.find(user => user.id === parseInt(req.params.id));
-  if(find){
+  if(find) {
     users.forEach(user => {
       if(user._id === parseInt(req.params.userId)){
-        return res.json({msg: 'User deleted'});
-      }
+        return res.json(user);
+      } 
     })
+  } else {
+    res.status(400).json({ msg: `No user with the id of ${req.params.id}.` });
   }
+  res.send("User deleted");
 }
   
 
