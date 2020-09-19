@@ -2,10 +2,12 @@ const users = require('../data/index');
 const sampleUser = require('../data/sampleUser');
 
 
+//gets all users
 const listUsers = (req, res) => {
   return res.json(users);
 }
 
+//gets one user with id
 const showUser = (req, res) => {
   let find = users.find(user => user.id === parseInt(req.params.id));
   if(find) {
@@ -15,6 +17,7 @@ const showUser = (req, res) => {
   }
 }
 
+//create user with post
 const createUser = (req, res) => {
   let counter = users.length + 1;
   sampleUser.id = counter;
@@ -22,12 +25,13 @@ const createUser = (req, res) => {
   return res.json(users);
 }
 
+//update user with put
 const updateUser = (req, res) => {
   let find = users.find(user => user.id === parseInt(req.params.id));
   if(find) {
     users.forEach(user => {
-      if(user._id === parseInt(req.params.userId)){
-        user = sampleUser; //look into this??
+      if(user.id === parseInt(req.params.id)){
+        user.name = sampleUser.name;
         return res.json(user);
       } 
     })
@@ -36,6 +40,7 @@ const updateUser = (req, res) => {
   }
 }
 
+//delete user with id
 const deleteUser = (req, res) => {
   let find = users.find(user => user.id === parseInt(req.params.id));
   if(find) {
